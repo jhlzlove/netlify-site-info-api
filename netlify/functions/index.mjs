@@ -6,9 +6,15 @@ const HOSTS = process.env.HOSTS || ['localhost'];
 // 用于处理请求的 Netlify Lambda 函数
 export const handler = async (event, context) => {
     try {
+
+        let requestUrl = event.request.url;
+        console.log('Request URL:', requestUrl);
         // 获取请求参数
         const url = new URL(event.request.url).searchParams.get('url');
 
+        console.log('get url', url);
+
+        // 只解析 https
         if (!url || !url.startsWith('http')) {
             return {
                 statusCode: 400,
@@ -16,21 +22,21 @@ export const handler = async (event, context) => {
             };
         }
 
-        const referer = req.headers.referer || '';
-        if (referer.length > 0) {
-            const refererHost = new URL(referer).hostname || '';
-            if (!HOSTS.includes(refererHost)) {
-                console.error('referer invalid:', referer);
-                res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
-                return;
-            }
-        } else {
-            if (!HOSTS.includes('')) {
-                console.error('referer can not be empty!');
-                res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
-                return;
-            }
-        }
+        // const referer = event.headers.referer || '';
+        // if (referer.length > 0) {
+        //     const refererHost = new URL(referer).hostname || '';
+        //     if (!HOSTS.includes(refererHost)) {
+        //         console.error('referer invalid:', referer);
+        //         res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
+        //         return;
+        //     }
+        // } else {
+        //     if (!HOSTS.includes('')) {
+        //         console.error('referer can not be empty!');
+        //         res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
+        //         return;
+        //     }
+        // }
 
 
         let response;
