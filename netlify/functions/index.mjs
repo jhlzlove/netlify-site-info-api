@@ -9,7 +9,7 @@ exports.handler = async function (event, context) {
 
         const url = event.queryStringParameters.url;
 
-        console.log('get url', url);
+        console.log(`url: ${url} hosts: ${HOSTS}`);
 
         // 只解析 https
         if (!url || !url.startsWith('http')) {
