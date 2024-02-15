@@ -84,6 +84,7 @@ exports.handler = async function (event, context) {
         data.desc = descEl ? descEl.getAttribute('content').trim() : '';
 
         // 获取 icon
+        let icon;
         let elIcon = document.querySelector('head link[rel="apple-touch-icon"]');
         if (!elIcon) {
             elIcon = document.querySelector('head link[rel="icon"]')
