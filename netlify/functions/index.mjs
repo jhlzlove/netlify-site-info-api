@@ -84,23 +84,40 @@ exports.handler = async function (event, context) {
         data.desc = descEl ? descEl.getAttribute('content').trim() : '';
 
         // 获取 icon
-        let icon;
-        let iconEl = document.querySelector('head link[rel="apple-touch-icon"]') || document.querySelector('head link[rel="icon"]');
-        if (!iconEl) {
-            iconEl = document.querySelector('head meta[property="og:image"]');
-            if (!iconEl) {
-                iconEl = document.querySelector('head meta[property="twitter:image"]');
+        let elIcon = document.querySelector('head link[rel="apple-touch-icon"]');
+        if (!elIcon) {
+            elIcon = document.querySelector('head link[rel="icon"]')
+        }
+        if (elIcon) {
+            icon = elIcon && elIcon.getAttribute('href');
+        } else {
+            elIcon = document.querySelector('head meta[property="og:image"]');
+            if (!elIcon) {
+                elIcon = document.querySelector('head meta[property="twitter:image"]');
+            }
+            if (elIcon) {
+                icon = elIcon.content;
             }
         }
-        if (iconEl) {
-            icon = iconEl.getAttribute('href') || iconEl.content;
+
+        if (/^data:image/.test(icon)) {
+            icon = '';
         }
 
-        if (icon && !/^https?:\/\/|^\/\//.test(icon)) {
-            const origin = new URL(url).origin;
-            icon = origin + icon;
+        // If there is no src then get the site icon
+        if (!icon) {
+            const links = [].slice.call(document.querySelectorAll('link[rel][href]'))
+            elIcon = links.find((_el) => _el.rel.includes('icon'))
+            icon = elIcon && elIcon.getAttribute('href')
         }
-        data.icon = icon;
+
+        // If `icon` is not the ['https://', 'http://', '//'] protocol, splice on the `origin` of the a tag
+        if (icon && !isHttp(icon)) {
+            icon = new URL(link).origin + icon;
+        }
+        if (icon) {
+            data.icon = icon;
+        }
 
         return {
             statusCode: 200,
