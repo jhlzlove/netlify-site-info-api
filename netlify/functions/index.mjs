@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom';
-import fetch from 'node-fetch';
 
 const HOSTS = process.env.HOSTS || ['localhost'];
+
 
 // 无服务器版本
 exports.handler = async function (event, context) {
@@ -133,5 +133,11 @@ exports.handler = async function (event, context) {
             statusCode: 500,
             body: JSON.stringify({ error: 'Internal server error' }),
         };
+    }
+
+
+
+    function isHttp(url) {
+        return /^(https?:)?\/\//g.test(url)
     }
 };
