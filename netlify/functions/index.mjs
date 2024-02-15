@@ -7,10 +7,7 @@ const HOSTS = process.env.HOSTS || ['localhost'];
 exports.handler = async function (event, context) {
     try {
 
-        const requestUrl = event.queryStringParameters.url;
-        console.log('Request URL:', requestUrl);
-        // 获取请求参数
-        const url = new URL(requestUrl).searchParams.get('url');
+        const url = event.queryStringParameters.url;
 
         console.log('get url', url);
 
