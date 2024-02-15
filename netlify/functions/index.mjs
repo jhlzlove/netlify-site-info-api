@@ -9,8 +9,6 @@ exports.handler = async function (event, context) {
 
         const url = event.queryStringParameters.url;
 
-        console.log(`url: ${url} hosts: ${HOSTS}`);
-
         // 只解析 https
         if (!url || !url.startsWith('http')) {
             return {
@@ -20,13 +18,14 @@ exports.handler = async function (event, context) {
         }
 
         const referer = event.headers.referer || '';
+        console.log(`referer : ${referer}`);
         if (referer.length > 0) {
             const refererHost = new URL(referer).hostname || '';
             if (!HOSTS.includes(refererHost)) {
                 console.error('referer invalid:', referer);
                 return {
                     statusCode: 500,
-                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" }),
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/jhlzlove/netlify-site-info-api/" }),
                 }
             }
         } else {
@@ -34,7 +33,7 @@ exports.handler = async function (event, context) {
                 console.error('referer can not be empty!');
                 return {
                     statusCode: 500,
-                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" }),
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/netlify-site-info-api/" }),
                 }
             }
         }
