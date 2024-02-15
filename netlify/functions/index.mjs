@@ -3,14 +3,14 @@ import fetch from 'node-fetch';
 
 const HOSTS = process.env.HOSTS || ['localhost'];
 
-// 用于处理请求的 Netlify Lambda 函数
-export const handler = async (event, context) => {
+// 无服务器版本
+exports.handler = async function (event, context) {
     try {
 
-        let requestUrl = event.request.url;
+        const requestUrl = event.queryStringParameters.url;
         console.log('Request URL:', requestUrl);
         // 获取请求参数
-        const url = new URL(event.request.url).searchParams.get('url');
+        const url = new URL(requestUrl).searchParams.get('url');
 
         console.log('get url', url);
 
