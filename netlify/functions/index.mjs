@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
                 console.error('referer invalid:', referer);
                 return {
                     statusCode: 500,
-                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/jhlzlove/netlify-site-info-api/" }),
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/jhlzlove/netlify-site-info-api" }),
                 }
             }
         } else {
@@ -33,7 +33,7 @@ exports.handler = async function (event, context) {
                 console.error('referer can not be empty!');
                 return {
                     statusCode: 500,
-                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/netlify-site-info-api/" }),
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/jhlzlove/netlify-site-info-api" }),
                 }
             }
         }
