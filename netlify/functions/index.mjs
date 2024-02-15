@@ -123,6 +123,7 @@ exports.handler = async function (event, context) {
             statusCode: 200,
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify(data),
         };
