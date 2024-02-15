@@ -114,7 +114,7 @@ exports.handler = async function (event, context) {
 
         // If `icon` is not the ['https://', 'http://', '//'] protocol, splice on the `origin` of the a tag
         if (icon && !isHttp(icon)) {
-            icon = new URL(link).origin + icon;
+            icon = new URL(url).origin + icon;
         }
         if (icon) {
             data.icon = icon;
