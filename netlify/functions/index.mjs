@@ -19,21 +19,25 @@ exports.handler = async function (event, context) {
             };
         }
 
-        // const referer = event.headers.referer || '';
-        // if (referer.length > 0) {
-        //     const refererHost = new URL(referer).hostname || '';
-        //     if (!HOSTS.includes(refererHost)) {
-        //         console.error('referer invalid:', referer);
-        //         res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
-        //         return;
-        //     }
-        // } else {
-        //     if (!HOSTS.includes('')) {
-        //         console.error('referer can not be empty!');
-        //         res.send({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" });
-        //         return;
-        //     }
-        // }
+        const referer = event.headers.referer || '';
+        if (referer.length > 0) {
+            const refererHost = new URL(referer).hostname || '';
+            if (!HOSTS.includes(refererHost)) {
+                console.error('referer invalid:', referer);
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" }),
+                }
+            }
+        } else {
+            if (!HOSTS.includes('')) {
+                console.error('referer can not be empty!');
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({ "title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/" }),
+                }
+            }
+        }
 
 
         let response;
